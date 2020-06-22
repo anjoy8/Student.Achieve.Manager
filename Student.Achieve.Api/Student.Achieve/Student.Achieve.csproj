@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <!--<AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>-->
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>..\Student.Achieve\Student.Achieve.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Hubs\**" />
+    <Content Remove="Hubs\**" />
+    <EmbeddedResource Remove="Hubs\**" />
+    <None Remove="Hubs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="index.html" />
+    <None Remove="Student.db-journal" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.4.0" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.5.0" />
+    <PackageReference Include="AutoMapper" Version="8.1.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.0" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.7.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.0.165" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Student.Achieve.Repository\Student.Achieve.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\测试下载中文名称的图片.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Student.Achieve.Model.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Student.Achieve.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,243 @@
+body {
+    margin: 0px;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#app,.container {
+    height: 100%;
+}
+ .main{
+    height: calc(100% - 60px);
+}
+
+.container {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    width: 100%;
+}
+.content-wrapper{
+    /*margin-bottom: 80px;*/
+}
+
+.content-expanded{
+    max-width: calc(100% - 210px);
+    max-height: calc(100% - 80px);
+}
+.content-collapsed{
+    max-width: 100%;
+
+}
+.el-scrollbar__wrap{
+    /*overflow-x: auto !important;*/
+}
+
+.container .header {
+    height: 60px;
+    line-height: 60px;
+    background: #3381B4;
+    color: #fff;
+}
+
+.container .header .userinfo {
+    text-align: right;
+    padding-right: 5px;
+    float: right;
+    width: auto;
+}
+
+.container .header .userinfo .userinfo-inner {
+    cursor: pointer;
+    color: #fff;
+}
+
+.container .header .userinfo .userinfo-inner img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    margin: 10px 0px 10px 10px;
+    float: right;
+}
+
+.container .header .logo {
+    height: 60px;
+    font-size: 22px;
+    padding-left: 20px;
+    padding-right: 1px;
+    border-color: rgba(238, 241, 146, 0.3);
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+
+.container .header .logo img {
+    width: 40px;
+    float: left;
+    margin: 10px 10px 10px 18px;
+}
+
+.container .header .logo .txt {
+    color: #fff;
+}
+
+.container .header .logo-width {
+    width: 210px;
+}
+
+.container .header .logo-collapse-width {
+    width: 65px;
+}
+
+.container .header .tools {
+    padding: 0px 23px;
+    width: 14px;
+    height: 60px;
+    line-height: 60px;
+    cursor: pointer;
+    float:left;
+}
+
+.container .main {
+    display: flex;
+    /*position: absolute;*/
+    top: 60px;
+    bottom: 0px;
+    overflow: hidden;
+}
+
+.container .main aside {
+    flex: 0 0 210px;
+    width: 210px;
+}
+
+.container .main aside .el-menu {
+    height: 100%;
+}
+
+.container .main aside .collapsed {
+    width: 64px;
+}
+
+.container .main aside .collapsed .item {
+    position: relative;
+}
+
+.container .main aside .collapsed .submenu {
+    position: absolute;
+    top: 0px;
+    left: 60px;
+    z-index: 99999;
+    height: auto;
+    display: none;
+}
+
+.container .main .menu-collapsed {
+    flex: 0 0 60px;
+    /*width: 60px;*/
+}
+
+.container .main .menu-expanded {
+    flex: 0 0 210px;
+    width: 210px;
+}
+
+.container .main .content-container {
+    flex: 1;
+    overflow-y: scroll;
+    padding: 20px;
+}
+.container .main .content-container .breadcrumb-container{
+    display: none;
+}
+.container .main .content-container .breadcrumb-container .title {
+    width: 200px;
+    float: left;
+    color: #475669;
+}
+
+.container .main .content-container .breadcrumb-container .breadcrumb-inner {
+    float: right;
+}
+
+.container .main .content-container .content-wrapper {
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.fa {
+    vertical-align: baseline;
+    margin-right: 10px;
+}
+.tools.collapsed i {
+     -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transition: -webkit-transform .2s ease;
+    transition: -webkit-transform .2s ease;
+    transition: transform .2s ease;
+    transition: transform .2s ease,-webkit-transform .2s ease;
+}
+
+.menu-collapsed .title-name{
+    display: none !important;
+}
+.menu-collapsed i{
+    font-size:20px;
+}
+
+.logo{
+    cursor: pointer;
+}
+.tag-dot-inner{
+    background: #ccc;
+    float: left;
+    border-radius: 50%;
+    display: inline-block;
+    height: 12px;
+    margin-right: 8px;
+    position: relative;
+    top: 6px;
+    width: 12px;
+    transition: background .2s ease;
+}
+.active .tag-dot-inner{
+    background: #2d8cf0;
+}
+.content-az{
+    border: 1px solid #f0f0f0;
+    /*margin: 10px 15px;*/
+    /*overflow: auto;*/
+    margin-right: 10px;
+    height: 100%;
+    padding: 5px;
+    
+    overflow-y: auto;
+}
+.content-wrapper .tags{
+    padding-right: 20px;
+}
+.content-az section{
+    overflow: auto;
+    height: 100%;
+}
+.welcome-card{
+    width:30%;float:left;margin-right:10px;
+
+
+}
+@media screen and (max-width: 500px) {
+   
+    .welcome-card{
+        width:100%;
+    }
+}
+
+.el-submenu__title i {
+    color: #f8f8f8 !important;
+}
+.el-breadcrumb__inner {
+    color: #b5bdcc !important;
+}

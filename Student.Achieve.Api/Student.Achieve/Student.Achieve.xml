@@ -1,0 +1,1261 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Student.Achieve</name>
+    </assembly>
+    <members>
+        <member name="T:Student.Achieve.AOP.BlogCacheAOP">
+            <summary>
+            面向切面的缓存使用
+            </summary>
+        </member>
+        <member name="T:Student.Achieve.AOP.BlogLogAOP">
+            <summary>
+            拦截器BlogLogAOP 继承IInterceptor接口
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.AOP.BlogLogAOP.Intercept(Castle.DynamicProxy.IInvocation)">
+            <summary>
+            实例化IInterceptor唯一方法 
+            </summary>
+            <param name="invocation">包含被拦截方法的信息</param>
+        </member>
+        <member name="M:Student.Achieve.AOP.CacheAOPbase.Intercept(Castle.DynamicProxy.IInvocation)">
+            <summary>
+            AOP的拦截方法
+            </summary>
+            <param name="invocation"></param>
+        </member>
+        <member name="M:Student.Achieve.AOP.CacheAOPbase.CustomCacheKey(Castle.DynamicProxy.IInvocation)">
+            <summary>
+            自定义缓存的key
+            </summary>
+            <param name="invocation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.AOP.CacheAOPbase.GetArgumentValue(System.Object)">
+            <summary>
+            object 转 string
+            </summary>
+            <param name="arg"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.AuthHelper.JwtToken">
+            <summary>
+            JWTToken生成类
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.AuthHelper.JwtToken.BuildJwtToken(System.Security.Claims.Claim[],Student.Achieve.AuthHelper.PermissionRequirement)">
+            <summary>
+            获取基于JWT的Token
+            </summary>
+            <param name="claims">需要在登陆的时候配置</param>
+            <param name="permissionRequirement">在startup中定义的参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.AuthHelper.JwtToken.SerializeJwt(System.String)">
+            <summary>
+            解析
+            </summary>
+            <param name="jwtStr"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.AuthHelper.TokenModelJwt">
+            <summary>
+            令牌
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.TokenModelJwt.Uid">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.TokenModelJwt.Role">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.TokenModelJwt.Work">
+            <summary>
+            职能
+            </summary>
+        </member>
+        <member name="T:Student.Achieve.AuthHelper.PermissionHandler">
+            <summary>
+            权限授权处理器
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.PermissionHandler.Schemes">
+            <summary>
+            验证方案提供对象
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.PermissionHandler.RoleModulePermissionRepository">
+            <summary>
+            Repository 层注入
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.AuthHelper.PermissionHandler.#ctor(Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider,Student.Achieve.IRepository.IRoleModulePermissionRepository)">
+            <summary>
+            构造函数注入
+            </summary>
+            <param name="schemes"></param>
+            <param name="roleModulePermissionRepository"></param>
+        </member>
+        <member name="T:Student.Achieve.AuthHelper.PermissionItem">
+            <summary>
+            用户或角色或其他凭据实体,就像是订单详情一样
+            之前的名字是 Permission
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.PermissionItem.Role">
+            <summary>
+            用户或角色或其他凭据名称
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.PermissionItem.Url">
+            <summary>
+            请求Url
+            </summary>
+        </member>
+        <member name="T:Student.Achieve.AuthHelper.PermissionRequirement">
+            <summary>
+            必要参数类，类似一个订单信息
+            继承 IAuthorizationRequirement，用于设计自定义权限处理器PermissionHandler
+            因为AuthorizationHandler 中的泛型参数 TRequirement 必须继承 IAuthorizationRequirement
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.PermissionRequirement.Permissions">
+            <summary>
+            用户权限集合，一个订单包含了很多详情，
+            同理，一个网站的认证发行中，也有很多权限详情(这里是Role和URL的关系)
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.PermissionRequirement.DeniedAction">
+            <summary>
+            无权限action
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.PermissionRequirement.ClaimType">
+            <summary>
+            认证授权类型
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.PermissionRequirement.LoginPath">
+            <summary>
+            请求路径
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.PermissionRequirement.Issuer">
+            <summary>
+            发行人
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.PermissionRequirement.Audience">
+            <summary>
+            订阅人
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.PermissionRequirement.Expiration">
+            <summary>
+            过期时间
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.AuthHelper.PermissionRequirement.SigningCredentials">
+            <summary>
+            签名验证
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.AuthHelper.PermissionRequirement.#ctor(System.String,System.Collections.Generic.List{Student.Achieve.AuthHelper.PermissionItem},System.String,System.String,System.String,Microsoft.IdentityModel.Tokens.SigningCredentials,System.TimeSpan)">
+            <summary>
+            构造
+            </summary>
+            <param name="deniedAction">拒约请求的url</param>
+            <param name="permissions">权限集合</param>
+            <param name="claimType">声明类型</param>
+            <param name="issuer">发行人</param>
+            <param name="audience">订阅人</param>
+            <param name="signingCredentials">签名验证实体</param>
+            <param name="expiration">过期时间</param>
+        </member>
+        <member name="M:Student.Achieve.AutoMapper.CustomProfile.#ctor">
+            <summary>
+            配置构造函数，用来创建关系映射
+            </summary>
+        </member>
+        <member name="T:Student.Achieve.Controllers.ClazzController">
+            <summary>
+            班级管理
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ClazzController.Get(System.Int32,System.String)">
+            <summary>
+            获取全部班级
+            </summary>
+            <param name="page"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ClazzController.Post(Student.Achieve.Model.Models.Clazz)">
+            <summary>
+            添加一个班级
+            </summary>
+            <param name="Clazz"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ClazzController.Put(Student.Achieve.Model.Models.Clazz)">
+            <summary>
+            更新班级
+            </summary>
+            <param name="Clazz"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ClazzController.Delete(System.Int32)">
+            <summary>
+            删除班级
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.CourseController">
+            <summary>
+            课程管理
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.CourseController.#ctor(Student.Achieve.IRepository.ICourseRepository)">
+            <summary>
+            
+            </summary>
+            <param name="iCourseRepository"></param>
+        </member>
+        <member name="M:Student.Achieve.Controllers.CourseController.Get(System.Int32,System.String)">
+            <summary>
+            获取全部课程
+            </summary>
+            <param name="page"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.CourseController.Post(Student.Achieve.Model.Models.Course)">
+            <summary>
+            添加一个课程
+            </summary>
+            <param name="Course"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.CourseController.Put(Student.Achieve.Model.Models.Course)">
+            <summary>
+            更新课程
+            </summary>
+            <param name="Course"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.CourseController.Delete(System.Int32)">
+            <summary>
+            删除课程
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.ExamController">
+            <summary>
+            考试管理
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExamController.Get(System.Int32,System.String)">
+            <summary>
+            获取全部考试
+            </summary>
+            <param name="page"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExamController.Post(Student.Achieve.Model.Models.Exam)">
+            <summary>
+            添加一个考试
+            </summary>
+            <param name="Exam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExamController.Put(Student.Achieve.Model.Models.Exam)">
+            <summary>
+            更新考试
+            </summary>
+            <param name="Exam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExamController.Delete(System.Int32)">
+            <summary>
+            删除考试
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.ExamDetailController">
+            <summary>
+            题目管理
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExamDetailController.Get(System.Int32,System.String)">
+            <summary>
+            获取全部题目
+            </summary>
+            <param name="page"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExamDetailController.Post(Student.Achieve.Model.Models.ExamDetail)">
+            <summary>
+            添加一个题目
+            </summary>
+            <param name="ExamDetail"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExamDetailController.Put(Student.Achieve.Model.Models.ExamDetail)">
+            <summary>
+            更新题目
+            </summary>
+            <param name="ExamDetail"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExamDetailController.Delete(System.Int32)">
+            <summary>
+            删除题目
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.ExamDetailScoreController">
+            <summary>
+            题目得分管理
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExamDetailScoreController.Get(System.Int32,System.String)">
+            <summary>
+            获取全部题目得分
+            </summary>
+            <param name="page"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExamDetailScoreController.Post(Student.Achieve.Model.Models.ExamDetailScore)">
+            <summary>
+            添加一个题目得分
+            </summary>
+            <param name="ExamDetailScore"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExamDetailScoreController.Put(Student.Achieve.Model.Models.ExamDetailScore)">
+            <summary>
+            更新题目得分
+            </summary>
+            <param name="ExamDetailScore"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExamDetailScoreController.Delete(System.Int32)">
+            <summary>
+            删除题目得分
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.ExScoreController">
+            <summary>
+            成绩管理
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExScoreController.Get(System.Int32,System.String)">
+            <summary>
+            获取全部成绩
+            </summary>
+            <param name="page"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExScoreController.Post(Student.Achieve.Model.Models.ExScore)">
+            <summary>
+            添加一个成绩
+            </summary>
+            <param name="ExScore"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExScoreController.Put(Student.Achieve.Model.Models.ExScore)">
+            <summary>
+            更新成绩
+            </summary>
+            <param name="ExScore"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExScoreController.Delete(System.Int32)">
+            <summary>
+            删除成绩
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.GradeController">
+            <summary>
+            年级管理
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.GradeController.#ctor(Student.Achieve.IRepository.IGradeRepository,Student.Achieve.Common.HttpContextUser.IUser)">
+            <summary>
+            
+            </summary>
+            <param name="iGradeRepository"></param>
+        </member>
+        <member name="M:Student.Achieve.Controllers.GradeController.Get(System.Int32,System.String)">
+            <summary>
+            获取全部年级
+            </summary>
+            <param name="page"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.GradeController.Post(Student.Achieve.Model.Models.Grade)">
+            <summary>
+            添加一个年级
+            </summary>
+            <param name="Grade"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.GradeController.Put(Student.Achieve.Model.Models.Grade)">
+            <summary>
+            更新年级
+            </summary>
+            <param name="Grade"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.GradeController.Delete(System.Int32)">
+            <summary>
+            删除年级
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExcelImportController.GetTeacherDataSetFromExcel(System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.List{System.String}@,System.Collections.Generic.List{Student.Achieve.Controllers.TCCRoot}@)">
+            <summary>
+            将教师资料Excel中的内容转换成DataSet
+            </summary>
+            <param name="filePath"></param>
+            <param name="sqlnamesDic"></param>
+            <param name="course"></param>
+            <param name="tCCRoots"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExcelImportController.GetStudentDataSetFromExcel(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            将学生资料Excel中的内容转换成DataSet
+            </summary>
+            <param name="filePath"></param>
+            <param name="sqlnamesDic"></param>
+            <param name="course"></param>
+            <param name="tCCRoots"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExcelImportController.GetExScoreDataSetFromExcel(System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.List{Student.Achieve.Controllers.ESRoot}@)">
+            <summary>
+            将六次成绩资料Excel中的内容转换成DataSet
+            </summary>
+            <param name="filePath"></param>
+            <param name="sqlnamesDic"></param>
+            <param name="course"></param>
+            <param name="tCCRoots"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExcelImportController.GetBaseSortDataSetFromExcel(System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.List{Student.Achieve.Controllers.ESRoot}@)">
+            <summary>
+            将考生基础名次资料Excel中的内容转换成DataSet
+            </summary>
+            <param name="filePath"></param>
+            <param name="sqlnamesDic"></param>
+            <param name="course"></param>
+            <param name="tCCRoots"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExcelImportController.GetExamDetailDataSetFromExcel(System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.List{Student.Achieve.Controllers.ExamDetailRoot}@)">
+            <summary>
+            将学生单科客观题选题情况Excel中的内容转换成DataSet
+            </summary>
+            <param name="filePath"></param>
+            <param name="sqlnamesDic"></param>
+            <param name="course"></param>
+            <param name="tCCRoots"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExcelImportController.GetEDetailScoreDataSetFromExcel(System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.List{Student.Achieve.Controllers.EDetailScoreRoot}@)">
+            <summary>
+            将学生单科成绩Excel中的内容转换成DataSet
+            </summary>
+            <param name="filePath"></param>
+            <param name="sqlnamesDic"></param>
+            <param name="course"></param>
+            <param name="tCCRoots"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ExcelImportController.GetEDetailScoreAnswerDataSetFromExcel(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            将学生单科成绩Excel中的内容转换成DataSet
+            </summary>
+            <param name="filePath"></param>
+            <param name="sqlnamesDic"></param>
+            <param name="course"></param>
+            <param name="tCCRoots"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.EnrollmentYear">
+            <summary>
+            2018级
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.Grade">
+            <summary>
+            高一
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.ClazzLevel">
+            <summary>
+            A组
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.Manager">
+            <summary>
+            盛
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.Clazz">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.ClazzType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.ChooseSub">
+            <summary>
+            物理
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.TeacherCharge">
+            <summary>
+            李
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.Chinese">
+            <summary>
+            彭
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.Meth">
+            <summary>
+            范
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.English">
+            <summary>
+            罗
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.Physics">
+            <summary>
+            王
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.Chemistry">
+            <summary>
+            孙
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.Politics">
+            <summary>
+            肖
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.History">
+            <summary>
+            曾
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.Biology">
+            <summary>
+            李
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TeacherDataRoot.Geography">
+            <summary>
+            齐
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TCCRoot.className">
+            <summary>
+            班级
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TCCRoot.teacherName">
+            <summary>
+            教师
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.TCCRoot.courseName">
+            <summary>
+            科目
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.StudentDataRoot.StudentNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.StudentDataRoot.Name">
+            <summary>
+            胡高
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.StudentDataRoot.Clazz">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.StudentDataRoot.SubjectA">
+            <summary>
+            物理
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.StudentDataRoot.SubjectB">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.StudentDataRoot.Grade">
+            <summary>
+            高一
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.StudentDataRoot.InSchoolSituation">
+            <summary>
+            在校
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.StudentDataRoot.EnrollmentYear">
+            <summary>
+            入学年份
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.StudentDataRoot.Gender">
+            <summary>
+            男
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.StudentDataRoot.IsIndicators">
+            <summary>
+            是
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.StudentDataRoot.UniversityEntranceNumber">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.StudentDataRoot.Note1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.StudentDataRoot.Note2">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.StudentDataRoot.Note3">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ESRoot.enrollmentYear">
+            <summary>
+            入学年份
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ESRoot.academicYear2">
+            <summary>
+            学年
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ESRoot.grade">
+            <summary>
+            年级
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ESRoot.studentNo">
+            <summary>
+            学生学号
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ESRoot.course">
+            <summary>
+            科目
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ESRoot.score">
+            <summary>
+            成绩
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ESRoot.schoolTerm">
+            <summary>
+            学期
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ESRoot.examName">
+            <summary>
+            考试
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ESRoot.clazz">
+            <summary>
+            班级
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ExamDetailRoot.enrollmentYear">
+            <summary>
+            入学年份
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ExamDetailRoot.academicYear2">
+            <summary>
+            学年
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ExamDetailRoot.grade">
+            <summary>
+            年级
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ExamDetailRoot.schoolTerm">
+            <summary>
+            学期
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ExamDetailRoot.examName">
+            <summary>
+            考试名称
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ExamDetailRoot.course">
+            <summary>
+            科目
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ExamDetailRoot.edType">
+            <summary>
+            题型
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ExamDetailRoot.studentNo">
+            <summary>
+            学生学号
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ExamDetailRoot.studentName">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ExamDetailRoot.clazz">
+            <summary>
+            班级
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ExamDetailRoot.name">
+            <summary>
+            题目名称
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.ExamDetailRoot.studentAnswer">
+            <summary>
+            学生答案
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.EDetailScoreRoot.enrollmentYear">
+            <summary>
+            入学年份
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.EDetailScoreRoot.academicYear2">
+            <summary>
+            学年
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.EDetailScoreRoot.grade">
+            <summary>
+            年级
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.EDetailScoreRoot.schoolTerm">
+            <summary>
+            学期
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.EDetailScoreRoot.examName">
+            <summary>
+            考试名称
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.EDetailScoreRoot.course">
+            <summary>
+            科目
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.EDetailScoreRoot.studentNo">
+            <summary>
+            学生学号
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.EDetailScoreRoot.studentName">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.EDetailScoreRoot.clazz">
+            <summary>
+            班级
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.EDetailScoreRoot.coureTotalScore">
+            <summary>
+            科目总分
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.EDetailScoreRoot.objectiveScore">
+            <summary>
+            客观分
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.EDetailScoreRoot.subjectiveScore">
+            <summary>
+            主观分
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.EDetailScoreRoot.name">
+            <summary>
+            题目名称
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Controllers.EDetailScoreRoot.studentScore">
+            <summary>
+            学生得分
+            </summary>
+        </member>
+        <member name="T:Student.Achieve.Controllers.ImgController">
+            <summary>
+            图片管理
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ImgController.DownImg(Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            下载图片（支持中文字符）
+            </summary>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ImgController.InsertPicture(Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            上传图片,多文件，可以使用 postman 测试，
+            如果是单文件，可以 参数写 IFormFile file1
+            </summary>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.LoginController">
+            <summary>
+            登录管理【无权限】
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.LoginController.#ctor(Student.Achieve.IRepository.ISysAdminRepository,Student.Achieve.IRepository.IUserRoleRepository,Student.Achieve.IRepository.IRoleRepository,Student.Achieve.AuthHelper.PermissionRequirement,Student.Achieve.IRepository.ITeacherRepository)">
+            <summary>
+            构造函数注入
+            </summary>
+            <param name="SysAdminRepository"></param>
+            <param name="userRoleRepository"></param>
+            <param name="roleRepository"></param>
+            <param name="requirement"></param>
+        </member>
+        <member name="M:Student.Achieve.Controllers.LoginController.GetJwtToken3(System.String,System.String)">
+            <summary>
+            获取JWT的方法3：整个系统主要方法
+            </summary>
+            <param name="name"></param>
+            <param name="pass"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.LoginController.RefreshToken(System.String)">
+            <summary>
+            请求刷新Token（以旧换新）
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.LoginController.Md5Password(System.String)">
+            <summary>
+            测试 MD5 加密字符串
+            </summary>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.ModuleController">
+            <summary>
+            接口管理
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ModuleController.#ctor(Student.Achieve.IRepository.IModuleRepository)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="moduleRepository"></param>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ModuleController.Get(System.Int32,System.String)">
+            <summary>
+            获取全部接口api
+            </summary>
+            <param name="page"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ModuleController.Post(Student.Achieve.Model.Models.Module)">
+            <summary>
+            添加一条接口信息
+            </summary>
+            <param name="module"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ModuleController.Put(Student.Achieve.Model.Models.Module)">
+            <summary>
+            更新接口信息
+            </summary>
+            <param name="module"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.ModuleController.Delete(System.Int32)">
+            <summary>
+            删除一条接口
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.PermissionController">
+            <summary>
+            菜单管理
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.PermissionController.Get(System.Int32,System.String)">
+            <summary>
+            获取菜单
+            </summary>
+            <param name="page"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.PermissionController.Post(Student.Achieve.Model.Models.Permission)">
+            <summary>
+            添加一个菜单
+            </summary>
+            <param name="permission"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.PermissionController.Assign(Student.Achieve.Controllers.AssignView)">
+            <summary>
+            保存菜单权限分配
+            </summary>
+            <param name="assignView"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.PermissionController.GetPermissionTree(System.Int32,System.Boolean)">
+            <summary>
+            获取菜单树
+            </summary>
+            <param name="pid"></param>
+            <param name="needbtn"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.PermissionController.GetNavigationBar(System.Int32)">
+            <summary>
+            获取路由树
+            </summary>
+            <param name="uid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.PermissionController.GetPermissionIdByRoleId(System.Int32)">
+            <summary>
+            通过角色获取菜单【无权限】
+            </summary>
+            <param name="rid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.PermissionController.Put(Student.Achieve.Model.Models.Permission)">
+            <summary>
+            更新菜单
+            </summary>
+            <param name="permission"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.PermissionController.Delete(System.Int32)">
+            <summary>
+            删除菜单
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.RoleController">
+            <summary>
+            角色管理
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.RoleController.#ctor(Student.Achieve.IRepository.IRoleRepository)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="roleRepository"></param>
+        </member>
+        <member name="M:Student.Achieve.Controllers.RoleController.Get(System.Int32,System.String)">
+            <summary>
+            获取全部角色
+            </summary>
+            <param name="page"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.RoleController.Post(Student.Achieve.Model.Models.Role)">
+            <summary>
+            添加角色
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.RoleController.Put(Student.Achieve.Model.Models.Role)">
+            <summary>
+            更新角色
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.RoleController.Delete(System.Int32)">
+            <summary>
+            删除角色
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.UserController">
+            <summary>
+            用户管理
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.UserController.Get(System.Int32,System.String)">
+            <summary>
+            获取全部用户
+            </summary>
+            <param name="page"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.UserController.GetInfoByToken(System.String)">
+            <summary>
+            获取用户详情根据token
+            【无权限】
+            </summary>
+            <param name="token">令牌</param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.UserController.Post(Student.Achieve.Model.Models.SysAdmin)">
+            <summary>
+            添加一个用户
+            </summary>
+            <param name="SysAdmin"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.UserController.Put(Student.Achieve.Model.Models.SysAdmin)">
+            <summary>
+            更新用户与角色
+            </summary>
+            <param name="SysAdmin"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.UserController.Delete(System.Int32)">
+            <summary>
+            删除用户
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.UserRoleController">
+            <summary>
+            用户角色关系
+            【无权限】
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.UserRoleController.#ctor(Student.Achieve.IRepository.ISysAdminRepository,Student.Achieve.IRepository.IUserRoleRepository,Student.Achieve.IRepository.IRoleRepository)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="SysAdminRepository"></param>
+            <param name="userRoleRepository"></param>
+            <param name="roleRepository"></param>
+        </member>
+        <member name="M:Student.Achieve.Controllers.UserRoleController.AddUser(System.String,System.String)">
+            <summary>
+            新建用户
+            </summary>
+            <param name="loginName"></param>
+            <param name="loginPwd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.UserRoleController.AddRole(System.String)">
+            <summary>
+            新建Role
+            </summary>
+            <param name="roleName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.UserRoleController.AddUserRole(System.Int32,System.Int32)">
+            <summary>
+            新建用户角色关系
+            </summary>
+            <param name="uid"></param>
+            <param name="rid"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.StudentsController">
+            <summary>
+            年级管理
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.StudentsController.Get(System.Int32,System.String)">
+            <summary>
+            获取全部年级
+            </summary>
+            <param name="page"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.StudentsController.Post(Student.Achieve.Model.Models.Students)">
+            <summary>
+            添加一个年级
+            </summary>
+            <param name="Students"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.StudentsController.Put(Student.Achieve.Model.Models.Students)">
+            <summary>
+            更新年级
+            </summary>
+            <param name="Students"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.StudentsController.Delete(System.Int32)">
+            <summary>
+            删除年级
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.TeacherController">
+            <summary>
+            年级管理
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Controllers.TeacherController.Get(System.Int32,System.String)">
+            <summary>
+            获取全部年级
+            </summary>
+            <param name="page"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.TeacherController.Post(Student.Achieve.Model.Models.Teacher)">
+            <summary>
+            添加一个年级
+            </summary>
+            <param name="Teacher"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.TeacherController.Put(Student.Achieve.Model.Models.Teacher)">
+            <summary>
+            更新年级
+            </summary>
+            <param name="Teacher"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Student.Achieve.Controllers.TeacherController.Delete(System.Int32)">
+            <summary>
+            删除年级
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Filter.GlobalRouteAuthorizeConvention">
+            <summary>
+            Summary:全局路由权限公约
+            Remarks:目的是针对不同的路由，采用不同的授权过滤器
+            如果 controller 上不加 [Authorize] 特性，默认都是 Permission 策略
+            否则，如果想特例其他授权机制的话，需要在 controller 上带上  [Authorize]，然后再action上自定义授权即可，比如 [Authorize(Roles = "Admin")]
+            </summary>
+        </member>
+        <member name="T:Student.Achieve.Filter.GlobalAuthorizeFilter">
+            <summary>
+            全局权限过滤器【无效】
+            </summary>
+        </member>
+        <member name="T:Student.Achieve.Filter.GlobalExceptionsFilter">
+            <summary>
+            全局异常错误日志
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Filter.GlobalExceptionsFilter.WriteLog(System.String,System.Exception)">
+            <summary>
+            自定义返回格式
+            </summary>
+            <param name="throwMsg"></param>
+            <param name="ex"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Student.Achieve.Filter.JsonErrorResponse.Message">
+            <summary>
+            生产环境的消息
+            </summary>
+        </member>
+        <member name="P:Student.Achieve.Filter.JsonErrorResponse.DevelopmentMessage">
+            <summary>
+            开发环境的消息
+            </summary>
+        </member>
+        <member name="T:Student.Achieve.Filter.GlobalRoutePrefixFilter">
+            <summary>
+            全局路由前缀公约
+            </summary>
+        </member>
+        <member name="T:Student.Achieve.Middlewares.RequRespLogMildd">
+            <summary>
+            中间件
+            记录请求和响应数据
+            </summary>
+        </member>
+        <member name="F:Student.Achieve.Middlewares.RequRespLogMildd._next">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Student.Achieve.Middlewares.RequRespLogMildd.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            
+            </summary>
+            <param name="next"></param>
+        </member>
+        <member name="P:Student.Achieve.Startup.Repository">
+            <summary>
+            log4net 仓储库
+            </summary>
+        </member>
+    </members>
+</doc>
