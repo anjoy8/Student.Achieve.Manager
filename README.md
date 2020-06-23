@@ -1,13 +1,19 @@
-# Student.Achieve.Manager
+## Student.Achieve.Manager
  学生管理系统：ASP.NetCore2.2 + Vue + Ele
  
  > PS：当前版本只是我的一个练手项目，并不是商业化产品，在多表的处理上，没有用到mapper联查，而是所有数据都查出来，这种方式数据多了肯定会慢，所以不用过多的关注性能，主要是业务逻辑的梳理；  
- > `禁止某些培训机构商用!!!`
  
  
- ## 操作流程
- #### 喜欢的话可以点个Star🎉
- 后端：  
+  **💡 声明：本项目只用于网友个人学习研究，禁止某些培训机构做商用!!! 💡**
+ 
+ 
+ ### 操作流程
+ 
+ #### 喜欢的话可以点个Star🎉  
+ 
+ 要不要录制视频来讲解，取决于点赞数量。
+ 
+ #### 后端：  
  直接F5运行项目，如果正常的情况下，会在web层生产一个Student.db的sqlite数据库，这是默认的， 如果想要开启不同的数据库，只需要配置好连接字符串后，开启Enabled为true就行，其他的全部设置false；
  
  成功页面：   
@@ -17,13 +23,17 @@
    
      
      
-前端：  
+#### 前端：  
 先`npm i`安装依赖包，然后直接运行即可。
+ 
+          
 
 
  
  
- ## 整体框架设计
+ 
+ ### 整体框架设计
+ 
  #### 后端  	`Student.Achieve.Api` 为 `Blog.Core`  项目的迷你精简版，功能很少：
  ```
  0、ASP.NET Core 2.2 （后期如果start超过50+，我再升级到 3.1 版本吧）
@@ -43,7 +53,7 @@
  
  
 
- #### 前端  	`Student.Achieve.UI` 为 `Blog.Admin`  项目的使用版本，有一定的出入：
+ ### 前端  	`Student.Achieve.UI` 为 `Blog.Admin`  项目的使用版本，有一定的出入：
  ```
  0、Vue 2 + Ele UI
  1、Router 路由
@@ -58,3 +68,7 @@
  ```
  
 
+### 主要页面
+
+![img](http://img.neters.club/github/640.png)
+![img](http://img.neters.club/github/33.png)
