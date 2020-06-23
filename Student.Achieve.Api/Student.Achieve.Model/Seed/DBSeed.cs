@@ -20,6 +20,8 @@ namespace Student.Achieve.Model.Models
         {
             try
             {
+                // 创建数据库
+                myContext.Db.DbMaintenance.CreateDatabase();
 
                 // 创建表
                 myContext.CreateTableByEntity(false,
