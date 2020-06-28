@@ -16,8 +16,9 @@ namespace Student.Achieve.Common.LogHelper
         static int FailedCount = 0;
         static string contentRoot = string.Empty;
 
-        public LogLock(IHostingEnvironment env) {
-            contentRoot = env.ContentRootPath;
+        public LogLock(string ContentRoot)
+        {
+            contentRoot = ContentRoot;
         }
 
         public static void OutSql2Log(string filename, string[] dataParas)

@@ -1,15 +1,15 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Student.Achieve.AuthHelper;
 using Student.Achieve.Common.Helper;
 using Student.Achieve.Common.HttpContextUser;
 using Student.Achieve.IRepository;
 using Student.Achieve.Model;
 using Student.Achieve.Model.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Student.Achieve.AuthHelper;
-using Newtonsoft.Json;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Student.Achieve.Controllers
 {
@@ -18,6 +18,7 @@ namespace Student.Achieve.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(Permissions.Name)]
     public class UserController : ControllerBase
     {
         readonly ISysAdminRepository _SysAdminRepository;

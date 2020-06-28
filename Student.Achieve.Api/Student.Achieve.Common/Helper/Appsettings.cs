@@ -2,9 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace Student.Achieve.Common
 {
@@ -29,7 +26,7 @@ namespace Student.Achieve.Common
         //    .Build();
         //}
 
-        public Appsettings(IHostingEnvironment env)
+        public Appsettings(string contentPath)
         {
             string Path = "appsettings.json";
 
@@ -43,7 +40,6 @@ namespace Student.Achieve.Common
             //.Build();
 
 
-            var contentPath = env.ContentRootPath;
             Configuration = new ConfigurationBuilder()
                .SetBasePath(contentPath)
                .Add(new JsonConfigurationSource { Path = Path, Optional = false, ReloadOnChange = true })//这样的话，可以直接读目录里的json文件，而不是 bin 文件夹下的，所以不用修改复制属性

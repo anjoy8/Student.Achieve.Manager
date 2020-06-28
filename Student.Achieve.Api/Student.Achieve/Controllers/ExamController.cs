@@ -15,6 +15,7 @@ namespace Student.Achieve.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(Permissions.Name)]
     public class ExamController : ControllerBase
     {
         private readonly IExamRepository _iExamRepository;

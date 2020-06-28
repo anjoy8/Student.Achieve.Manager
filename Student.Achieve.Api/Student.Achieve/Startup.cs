@@ -1,23 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Autofac.Extras.DynamicProxy;
+﻿using Autofac;
 using AutoMapper;
-using Student.Achieve.AOP;
-using Student.Achieve.AuthHelper;
-using Student.Achieve.Common;
-using Student.Achieve.Common.HttpContextUser;
-using Student.Achieve.Common.LogHelper;
-using Student.Achieve.Common.MemoryCache;
-using Student.Achieve.Filter;
-using Student.Achieve.Log;
-using Student.Achieve.Middlewares;
 using log4net;
 using log4net.Config;
 using log4net.Repository;
@@ -30,9 +12,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Swashbuckle.AspNetCore.Swagger;
+using Student.Achieve.AuthHelper;
+using Student.Achieve.Common;
+using Student.Achieve.Common.HttpContextUser;
+using Student.Achieve.Common.LogHelper;
+using Student.Achieve.Common.MemoryCache;
+using Student.Achieve.Extensions;
+using Student.Achieve.Filter;
+using Student.Achieve.Log;
+using Student.Achieve.Middlewares;
+using Swashbuckle.AspNetCore.Filters;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Student.Achieve
 {
@@ -44,7 +45,7 @@ namespace Student.Achieve
         /// </summary>
         public static ILoggerRepository Repository { get; set; }
 
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             Env = env;
@@ -58,12 +59,12 @@ namespace Student.Achieve
         }
 
         public IConfiguration Configuration { get; }
-        public IHostingEnvironment Env { get; }
+        public IWebHostEnvironment Env { get; }
         private const string ApiName = "Student.Achieve";
         private readonly string version="V1";
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             #region 部分服务注入-netcore自带方法
             // 缓存注入
@@ -103,17 +104,17 @@ namespace Student.Achieve
 
             #region Swagger UI Service
 
-            var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
+            var basePath = AppContext.BaseDirectory;
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc(version, new Info
+
+                c.SwaggerDoc(version, new OpenApiInfo
                 {
-                    // {ApiName} 定义成全局变量，方便修改
                     Version = version,
-                    Title = $"{ApiName} 接口文档",
+                    Title = $"{ApiName} 接口文档——{RuntimeInformation.FrameworkDescription}",
                     Description = $"{ApiName} HTTP API " + version,
-                    TermsOfService = "None",
-                    Contact = new Contact { Name = "Student.Achieve", Email = "Student.Achieve@xxx.com", Url = "https://www.baidu.com" }
+                    Contact = new OpenApiContact { Name = ApiName, Email = "Blog.Core@xxx.com", Url = new Uri("https://www.jianshu.com/u/94102b59cc2a") },
+                    License = new OpenApiLicense { Name = ApiName + " 官方文档", Url = new Uri("http://apk.neters.club/.doc/") }
                 });
                 c.OrderActionsBy(o => o.RelativePath);
 
@@ -128,18 +129,20 @@ namespace Student.Achieve
                 #region Token绑定到ConfigureServices
 
 
-                // 发行人
-                var IssuerName = (Configuration.GetSection("Audience"))["Issuer"];
-                var security = new Dictionary<string, IEnumerable<string>> { { IssuerName, new string[] { } }, };
-                c.AddSecurityRequirement(security);
+                // 开启加权小锁
+                c.OperationFilter<AddResponseHeadersFilter>();
+                c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
 
-                //方案名称“Student.Achieve”可自定义，上下一致即可
-                c.AddSecurityDefinition(IssuerName, new ApiKeyScheme
+                // 在header中添加token，传递到后台
+                c.OperationFilter<SecurityRequirementsOperationFilter>();
+
+                // Jwt Bearer 认证，必须是 oauth2
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
                     Description = "JWT授权(数据将在请求头中进行传输) 直接在下框中输入Bearer {token}（注意两者之间是一个空格）\"",
                     Name = "Authorization",//jwt默认的参数名称
-                    In = "header",//jwt默认存放Authorization信息的位置(请求头中)
-                    Type = "apiKey"
+                    In = ParameterLocation.Header,//jwt默认存放Authorization信息的位置(请求头中)
+                    Type = SecuritySchemeType.ApiKey
                 });
                 #endregion
             });
@@ -149,19 +152,25 @@ namespace Student.Achieve
             #region MVC + GlobalExceptions
 
             //注入全局异常捕获
-            services.AddMvc(o =>
+            services.AddControllers(o =>
             {
                 // 全局异常过滤
                 o.Filters.Add(typeof(GlobalExceptionsFilter));
                 // 全局路由权限公约
-                o.Conventions.Insert(0, new GlobalRouteAuthorizeConvention());
+                //o.Conventions.Insert(0, new GlobalRouteAuthorizeConvention());
                 // 全局路由前缀，统一修改路由
                 o.Conventions.Insert(0, new GlobalRoutePrefixFilter(new RouteAttribute(RoutePrefix.Name)));
             })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-            // 取消默认驼峰
-            .AddJsonOptions(options => { options.SerializerSettings.ContractResolver = new DefaultContractResolver(); });
-
+            //全局配置Json序列化处理
+            .AddNewtonsoftJson(options =>
+            {
+                //忽略循环引用
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                //不使用驼峰样式的key
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                //设置时间格式
+                //options.SerializerSettings.DateFormatString = "yyyy-MM-dd";
+            });
 
             #endregion
 
@@ -246,59 +255,21 @@ namespace Student.Achieve
 
             #endregion
 
-            services.AddSingleton(new Appsettings(Env));
-            services.AddSingleton(new LogLock(Env));
+            services.AddSingleton(new Appsettings(Env.ContentRootPath));
+            services.AddSingleton(new LogLock(Env.ContentRootPath));
 
-            #region AutoFac DI
+            
 
-            var builder = new ContainerBuilder();
-            builder.RegisterType<BlogLogAOP>();
-            builder.RegisterType<BlogCacheAOP>();//可以直接替换其他拦截器
-
-            #region Service.dll 注入，有对应接口
-            try
-            {
-                var servicesDllFile = Path.Combine(basePath, "Student.Achieve.Repository.dll");
-                var assemblysServices = Assembly.LoadFrom(servicesDllFile);
-
-                var cacheType = new List<Type>();
-                if (Appsettings.app(new string[] { "AppSettings", "LogAOP", "Enabled" }).ObjToBool())
-                {
-                    cacheType.Add(typeof(BlogLogAOP));
-                }
-                if (Appsettings.app(new string[] { "AppSettings", "MemoryCachingAOP", "Enabled" }).ObjToBool())
-                {
-                    cacheType.Add(typeof(BlogCacheAOP));
-                }
-
-                builder.RegisterAssemblyTypes(assemblysServices)
-                          .AsImplementedInterfaces()
-                          .InstancePerLifetimeScope()
-                          .EnableInterfaceInterceptors()
-                          .InterceptedBy(cacheType.ToArray()); 
-                #endregion
-
-                
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("※※★※※ 如果你是第一次下载项目，请先对整个解决方案dotnet build（F6编译），然后再对api层 dotnet run（F5执行），\n因为解耦了，如果你是发布的模式，请检查bin文件夹是否存在Repository.dll和service.dll ※※★※※" + ex.Message + "\n" + ex.InnerException);
-            }
-
-
-
-            //将services填充到Autofac容器生成器中
-            builder.Populate(services);
-
-            //使用已进行的组件登记创建新容器
-            var ApplicationContainer = builder.Build();
-            #endregion
-
-            return new AutofacServiceProvider(ApplicationContainer);//第三方IOC接管 core内置DI容器
         }
 
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new AutofacModuleRegister());
+        }
+
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
             #region ReuestResponseLog
@@ -337,10 +308,8 @@ namespace Student.Achieve
 
             #endregion
 
-            app.UseAuthentication();
-
+            // CORS跨域
             app.UseCors("LimitRequests");
-
             // 跳转https
             //app.UseHttpsRedirection();
             // 使用静态文件
@@ -348,9 +317,27 @@ namespace Student.Achieve
             // 使用cookie
             app.UseCookiePolicy();
             // 返回错误码
-            app.UseStatusCodePages();//把错误码返回前台，比如是404
+            app.UseStatusCodePages();
+            // Routing
+            app.UseRouting();
+            // 这种自定义授权中间件，可以尝试，但不推荐
+            // app.UseJwtTokenAuth();
+            // 先开启认证
+            app.UseAuthentication();
+            // 然后是授权中间件
+            app.UseAuthorization();
+            // 开启异常中间件，要放到最后
+            //app.UseExceptionHandlerMidd();
+            // 性能分析
+            app.UseMiniProfiler();
 
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
         }
 
     }

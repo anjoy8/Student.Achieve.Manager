@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Student.Achieve.IRepository;
 using Student.Achieve.Model;
 using Student.Achieve.Model.Models;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
 
 namespace Student.Achieve.Controllers
 {
@@ -14,6 +14,7 @@ namespace Student.Achieve.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(Permissions.Name)]
     public class CourseController : ControllerBase
     {
         private readonly ICourseRepository _iCourseRepository;

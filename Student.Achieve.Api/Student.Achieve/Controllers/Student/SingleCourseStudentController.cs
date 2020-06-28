@@ -1,14 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Student.Achieve.IRepository;
+using Student.Achieve.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Student.Achieve.Common.HttpContextUser;
-using Student.Achieve.IRepository;
-using Student.Achieve.Model;
 
 namespace Student.Achieve.Controllers
 {

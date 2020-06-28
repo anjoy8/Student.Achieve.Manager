@@ -16,6 +16,7 @@ namespace Student.Achieve.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(Permissions.Name)]
     public class TeacherController : ControllerBase
     {
         private readonly ITeacherRepository _iTeacherRepository;

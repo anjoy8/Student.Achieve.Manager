@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using Student.Achieve.IRepository;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Student.Achieve.IRepository;
+using System.Threading.Tasks;
 
 namespace Student.Achieve.Controllers
 {

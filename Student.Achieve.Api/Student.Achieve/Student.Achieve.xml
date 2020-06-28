@@ -1126,9 +1126,14 @@
             <param name="rid"></param>
             <returns></returns>
         </member>
+        <member name="T:Student.Achieve.Controllers.SingleCourseController">
+            <summary>
+            单科
+            </summary>
+        </member>
         <member name="T:Student.Achieve.Controllers.StudentsController">
             <summary>
-            年级管理
+            学生管理
             </summary>
         </member>
         <member name="M:Student.Achieve.Controllers.StudentsController.Get(System.Int32,System.String)">
@@ -1159,6 +1164,11 @@
             </summary>
             <param name="id"></param>
             <returns></returns>
+        </member>
+        <member name="T:Student.Achieve.Controllers.SubjectiveController">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:Student.Achieve.Controllers.TeacherController">
             <summary>
