@@ -1,6 +1,6 @@
 
 
-![Logo](https://img.neters.club/github/studentachieve.png)
+![Logo](https://img.neters.club/github/studentachievelogo.png)
 
  学生管理系统：ASP.NetCore3.1 + Vue + EleUI
  
