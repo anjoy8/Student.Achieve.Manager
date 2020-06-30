@@ -1,4 +1,7 @@
 ## Student.Achieve.Manager
+
+![Logo](https://img.neters.club/github/studentachieve.png)
+
  学生管理系统：ASP.NetCore3.1 + Vue + EleUI
  
  > PS：当前版本只是我的一个练手项目，并不是商业化产品，在多表的处理上，没有用到mapper联查，而是所有数据都查出来，这种方式数据多了肯定会慢(当然，如果start100+，证明有人用，我会升级改造的)，所以目前大家不用过多的关注性能问题，主要是**业务逻辑的梳理**；  
