@@ -126,6 +126,27 @@ namespace Student.Achieve.Model.Models
                     Console.WriteLine("Table:SysAdmin already exists...");
                 }
                 #endregion
+
+                #region Teacher
+                if (!await myContext.Db.Queryable<Teacher>().AnyAsync())
+                {
+                    myContext.GetEntityDB<Teacher>().Insert(new Teacher()
+                    {
+                        TeacherNo = "G2999",
+                        Name = "G2999",
+                        Account = "G2999",
+                        Password = "D11731129AED59E997323E35FB63730",
+                        gradeId = 1,
+                        CreateTime = DateTime.Now,
+                        IsDeleted = false,
+                    });
+                    Console.WriteLine("Table:Teacher created success!");
+                }
+                else
+                {
+                    Console.WriteLine("Table:SysAdmin already exists...");
+                }
+                #endregion
                 Console.WriteLine("Done seeding database.");
                 Console.WriteLine();
 

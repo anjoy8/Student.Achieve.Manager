@@ -90,17 +90,13 @@
             验证方案提供对象
             </summary>
         </member>
-        <member name="P:Student.Achieve.AuthHelper.PermissionHandler.RoleModulePermissionRepository">
-            <summary>
-            Repository 层注入
-            </summary>
-        </member>
-        <member name="M:Student.Achieve.AuthHelper.PermissionHandler.#ctor(Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider,Student.Achieve.IRepository.IRoleModulePermissionRepository)">
+        <member name="M:Student.Achieve.AuthHelper.PermissionHandler.#ctor(Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider,Student.Achieve.IRepository.IRoleModulePermissionRepository,Microsoft.AspNetCore.Http.IHttpContextAccessor)">
             <summary>
             构造函数注入
             </summary>
             <param name="schemes"></param>
             <param name="roleModulePermissionRepository"></param>
+            <param name="accessor"></param>
         </member>
         <member name="T:Student.Achieve.AuthHelper.PermissionItem">
             <summary>
@@ -873,7 +869,7 @@
             登录管理【无权限】
             </summary>
         </member>
-        <member name="M:Student.Achieve.Controllers.LoginController.#ctor(Student.Achieve.IRepository.ISysAdminRepository,Student.Achieve.IRepository.IUserRoleRepository,Student.Achieve.IRepository.IRoleRepository,Student.Achieve.AuthHelper.PermissionRequirement,Student.Achieve.IRepository.ITeacherRepository)">
+        <member name="M:Student.Achieve.Controllers.LoginController.#ctor(Student.Achieve.IRepository.ISysAdminRepository,Student.Achieve.IRepository.IUserRoleRepository,Student.Achieve.IRepository.IRoleRepository,Student.Achieve.AuthHelper.PermissionRequirement,Student.Achieve.IRepository.ITeacherRepository,Student.Achieve.IRepository.IRoleModulePermissionRepository)">
             <summary>
             构造函数注入
             </summary>
@@ -881,6 +877,8 @@
             <param name="userRoleRepository"></param>
             <param name="roleRepository"></param>
             <param name="requirement"></param>
+            <param name="iTeacherRepository"></param>
+            <param name="roleModulePermissionRepository"></param>
         </member>
         <member name="M:Student.Achieve.Controllers.LoginController.GetJwtToken3(System.String,System.String)">
             <summary>

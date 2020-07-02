@@ -670,6 +670,11 @@
             通用返回信息类
             </summary>
         </member>
+        <member name="P:Student.Achieve.Model.MessageModel`1.status">
+            <summary>
+            状态码
+            </summary>
+        </member>
         <member name="P:Student.Achieve.Model.MessageModel`1.success">
             <summary>
             操作是否成功

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Student.Achieve.Model.ViewModels;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -15,7 +16,7 @@ namespace Student.Achieve.AuthHelper
         /// <param name="claims">需要在登陆的时候配置</param>
         /// <param name="permissionRequirement">在startup中定义的参数</param>
         /// <returns></returns>
-        public static dynamic BuildJwtToken(Claim[] claims, PermissionRequirement permissionRequirement)
+        public static TokenInfoViewModel BuildJwtToken(Claim[] claims, PermissionRequirement permissionRequirement)
         {
             var now = DateTime.Now;
             // 实例化JwtSecurityToken
@@ -31,7 +32,7 @@ namespace Student.Achieve.AuthHelper
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
             //打包返回前台
-            var responseJson = new
+            var responseJson = new TokenInfoViewModel
             {
                 success = true,
                 token = encodedJwt,
@@ -68,7 +69,6 @@ namespace Student.Achieve.AuthHelper
             return tm;
         }
     }
-
     /// <summary>
     /// 令牌
     /// </summary>
@@ -87,5 +87,12 @@ namespace Student.Achieve.AuthHelper
         /// </summary>
         public string Work { get; set; }
 
+    }
+    public class TokenInfoViewModel
+    {
+        public bool success { get; set; }
+        public string token { get; set; }
+        public double expires_in { get; set; }
+        public string token_type { get; set; }
     }
 }

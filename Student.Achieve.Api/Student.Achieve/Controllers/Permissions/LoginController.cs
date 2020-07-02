@@ -26,6 +26,7 @@ namespace Student.Achieve.Controllers
         readonly IRoleRepository _roleRepository;
         readonly PermissionRequirement _requirement;
         private readonly ITeacherRepository _iTeacherRepository;
+        private readonly IRoleModulePermissionRepository _roleModulePermissionRepository;
 
 
         /// <summary>
@@ -35,13 +36,16 @@ namespace Student.Achieve.Controllers
         /// <param name="userRoleRepository"></param>
         /// <param name="roleRepository"></param>
         /// <param name="requirement"></param>
-        public LoginController(ISysAdminRepository SysAdminRepository, IUserRoleRepository userRoleRepository, IRoleRepository roleRepository, PermissionRequirement requirement,ITeacherRepository iTeacherRepository)
+        /// <param name="iTeacherRepository"></param>
+        /// <param name="roleModulePermissionRepository"></param>
+        public LoginController(ISysAdminRepository SysAdminRepository, IUserRoleRepository userRoleRepository, IRoleRepository roleRepository, PermissionRequirement requirement,ITeacherRepository iTeacherRepository, IRoleModulePermissionRepository roleModulePermissionRepository)
         {
             this._SysAdminRepository = SysAdminRepository;
             this._userRoleRepository = userRoleRepository;
             this._roleRepository = roleRepository;
             this._requirement = requirement;
             this._iTeacherRepository = iTeacherRepository;
+            _roleModulePermissionRepository = roleModulePermissionRepository;
         }
 
 
@@ -72,6 +76,22 @@ namespace Student.Achieve.Controllers
 
             var user = await _SysAdminRepository.Query(d => d.uLoginName == name && d.uLoginPWD == pass);
             var teacher = await _iTeacherRepository.Query(d => d.Account == name && d.Password == pass);
+
+            var data = await _roleModulePermissionRepository.RoleModuleMaps();
+            var list = new List<PermissionItem>();
+
+            {
+                list = (from item in data
+                        where item.IsDeleted == false
+                        orderby item.Id
+                        select new PermissionItem
+                        {
+                            Url = item.Module?.LinkUrl,
+                            Role = item.Role?.Name.ObjToString(),
+                        }).ToList();
+            }
+            _requirement.Permissions = list;
+
             if (user.Count > 0)
             {
                 var userRoles = await _SysAdminRepository.GetUserRoleNameStr(name, pass);

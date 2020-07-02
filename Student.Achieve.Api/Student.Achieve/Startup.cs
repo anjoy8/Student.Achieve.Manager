@@ -3,6 +3,7 @@ using AutoMapper;
 using log4net;
 using log4net.Config;
 using log4net.Repository;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -61,7 +62,7 @@ namespace Student.Achieve
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Env { get; }
         private const string ApiName = "Student.Achieve";
-        private readonly string version="V1";
+        private readonly string version = "V1";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -248,9 +249,11 @@ namespace Student.Achieve
                          return Task.CompletedTask;
                      }
                  };
-             });
+             })
+             .AddScheme<AuthenticationSchemeOptions, ApiResponseHandler>(nameof(ApiResponseHandler), o => { });
 
-            services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
+
+            services.AddScoped<IAuthorizationHandler, PermissionHandler>();
             services.AddSingleton(permissionRequirement);
 
             #endregion
@@ -258,7 +261,7 @@ namespace Student.Achieve
             services.AddSingleton(new Appsettings(Env.ContentRootPath));
             services.AddSingleton(new LogLock(Env.ContentRootPath));
 
-            
+
 
         }
 
@@ -300,9 +303,9 @@ namespace Student.Achieve
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                    c.SwaggerEndpoint($"/swagger/{version}/swagger.json", $"{ApiName} {version}");
+                c.SwaggerEndpoint($"/swagger/{version}/swagger.json", $"{ApiName} {version}");
                 //c.IndexStream = () => GetType().GetTypeInfo().Assembly.GetManifestResourceStream("Student.Achieve.index.html");
-                c.RoutePrefix = ""; 
+                c.RoutePrefix = "";
             });
 
 

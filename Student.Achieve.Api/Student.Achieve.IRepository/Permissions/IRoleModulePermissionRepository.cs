@@ -12,5 +12,7 @@ namespace Student.Achieve.IRepository
     {
         Task<List<RoleModulePermission>> WithChildrenModel();
         Task<List<RoleModulePermission>> GetRoleModule();
+        Task<List<RoleModulePermission>> RoleModuleMaps();
+
     }
 }
