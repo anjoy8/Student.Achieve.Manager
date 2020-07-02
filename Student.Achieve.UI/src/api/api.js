@@ -5,7 +5,7 @@ import store from "../store";
 import Vue from 'vue';
 
 // 如果是iis部署的话，这么写，因为要使用后端api的绝对路径
-let base = process.env.NODE_ENV=="production"? 'http://localhost:6919':'';
+//let base = process.env.NODE_ENV=="production"? 'http://localhost:6919':'';
 // 如果是nginx的话，就置空就行了，因为用的是代理模式
 let base = '';
 
