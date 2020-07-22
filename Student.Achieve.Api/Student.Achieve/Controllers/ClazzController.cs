@@ -19,16 +19,15 @@ namespace Student.Achieve.Controllers
     public class ClazzController : ControllerBase
     {
         private readonly IClazzRepository _iClazzRepository;
-        private readonly IGradeRepository _iGradeRepository;
         private readonly IUser _iUser;
         private int GID = 0;
 
 
         public ClazzController(IClazzRepository iClazzRepository, IGradeRepository iGradeRepository, IUser iUser)
         {
-            this._iClazzRepository = iClazzRepository;
-            this._iGradeRepository = iGradeRepository;
-            GID = (iUser.GetClaimValueByType("GID").FirstOrDefault()).ObjToInt();
+            _iClazzRepository = iClazzRepository;
+            _iUser = iUser;
+            GID = (_iUser.GetClaimValueByType("GID").FirstOrDefault()).ObjToInt();
         }
 
         /// <summary>
@@ -39,6 +38,7 @@ namespace Student.Achieve.Controllers
         /// <returns></returns>
         // GET: api/Clazz
         [HttpGet]
+        [AllowAnonymous]
         public async Task<MessageModel<PageModel<Clazz>>> Get(int page = 1, string key = "")
         {
             if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))
@@ -51,13 +51,12 @@ namespace Student.Achieve.Controllers
             }
             int intPageSize = 50;
 
+#if DEBUG
+            GID = 1;
+#endif
 
-            var data = await _iClazzRepository.QueryPage(a => (a.IsDeleted == false && (a.Name != null && a.Name.Contains(key)))&& (a.GradeId == GID || (GID == -9999 && true)), page, intPageSize, " Id asc ");
+            var data = await _iClazzRepository.GetQueryPageOfMapperTb(a => (a.IsDeleted == false && (a.Name != null && a.Name.Contains(key))) && (a.GradeId == GID || (GID == -9999 && true)), page, intPageSize, " Id asc ");
 
-            foreach (var item in data.data)
-            {
-                item.Grade = await _iGradeRepository.QueryById(item.GradeId);
-            }
 
             return new MessageModel<PageModel<Clazz>>()
             {
@@ -160,10 +159,10 @@ namespace Student.Achieve.Controllers
         // GET: api/Clazz/GetClazzTree
         [HttpGet]
         [AllowAnonymous]
-        public async Task<MessageModel<List<TreeModel>>> GetClazzTree(int gid=0)
+        public async Task<MessageModel<List<TreeModel>>> GetClazzTree(int gid = 0)
         {
             List<Clazz> clazzList = await _iClazzRepository.Query(d => d.IsDeleted == false);
-            if (gid>0)
+            if (gid > 0)
             {
                 clazzList = clazzList.Where(d => d.GradeId == gid).ToList();
             }
