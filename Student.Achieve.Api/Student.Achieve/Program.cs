@@ -59,7 +59,7 @@ namespace Student.Achieve
              {
                  webBuilder
                  .UseStartup<Startup>()
-                 .UseUrls("http://localhost:691");
+                 .UseUrls("http://*:691");
              });
     }
 }
