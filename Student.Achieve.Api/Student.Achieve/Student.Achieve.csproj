@@ -53,6 +53,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Student.Achieve.Model.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
