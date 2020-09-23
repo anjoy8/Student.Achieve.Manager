@@ -18,7 +18,7 @@
             <el-card class="box-card">
                 <div slot="header" class="clearfix">
                     <span>菜单</span>
-                    <el-button :loading="loadingSave" @click="saveAssign" style="float: right; padding: 3px 0" type="text">{{loadingSaveStr}}</el-button>
+                    <!-- <el-button :loading="loadingSave" @click="saveAssign" style="float: right; padding: 3px 0" type="text">{{loadingSaveStr}}</el-button> -->
                 </div>
                 <div class="block">
                     <!--<el-tree :data="data5" size="mini" show-checkbox node-key="value" :props="defaultProps"-->
