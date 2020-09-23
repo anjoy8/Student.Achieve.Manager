@@ -272,6 +272,7 @@ namespace Student.Achieve.Controllers
         /// <param name="uid"></param>
         /// <returns></returns>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<MessageModel<NavigationBar>> GetNavigationBar(int uid)
         {
 
