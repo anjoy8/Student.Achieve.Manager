@@ -44,6 +44,7 @@ namespace Student.Achieve.Controllers
         /// <returns></returns>
         // GET: api/ExamDetail
         [HttpGet]
+        [AllowAnonymous]
         public async Task<MessageModel<PageModel<ExamDetail>>> Get(int page = 1, string key = "")
         {
             if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))

@@ -46,6 +46,7 @@ namespace Student.Achieve.Controllers
         /// <returns></returns>
         // GET: api/ExScore
         [HttpGet]
+        [AllowAnonymous]
         public async Task<MessageModel<PageModel<ExScore>>> Get(int page = 1, string key = "")
         {
             if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key))
