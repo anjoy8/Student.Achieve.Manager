@@ -68,7 +68,6 @@ namespace Student.Achieve.Model.Models
                 ConnectionString = _connectionString,
                 DbType = _dbType,
                 IsAutoCloseConnection = true,
-                IsShardSameThread = false,
                 InitKeyType = InitKeyType.Attribute,//mark
                 ConfigureExternalServices = new ConfigureExternalServices()
                 {
@@ -325,7 +324,6 @@ namespace {Namespace}
                 {
                     //DataInfoCacheService = new HttpRuntimeCache()
                 },
-                IsShardSameThread = blnIsShardSameThread
             };
             return config;
         }

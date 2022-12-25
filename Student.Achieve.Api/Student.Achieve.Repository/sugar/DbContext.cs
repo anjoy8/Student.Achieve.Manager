@@ -75,7 +75,7 @@ namespace Student.Achieve.Repository
                 ConnectionString = _connectionString,
                 DbType = _dbType,
                 IsAutoCloseConnection = blnIsAutoCloseConnection,
-                IsShardSameThread = false,
+                //IsShardSameThread = false,
                 ConfigureExternalServices = new ConfigureExternalServices()
                 {
                     //DataInfoCacheService = new HttpRuntimeCache()
@@ -358,7 +358,7 @@ namespace {Namespace}
                 {
                     //DataInfoCacheService = new HttpRuntimeCache()
                 },
-                IsShardSameThread = blnIsShardSameThread
+                //IsShardSameThread = blnIsShardSameThread
             };
             return config;
         }

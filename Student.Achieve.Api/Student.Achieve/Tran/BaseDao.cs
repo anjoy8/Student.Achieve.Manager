@@ -28,7 +28,7 @@ namespace Student.Achieve.Tran
                     ConnectionString = BaseDBConfig.ConnectionString,
                     DbType = (DbType)BaseDBConfig.DbType,
                     IsAutoCloseConnection = true,
-                    IsShardSameThread = true /*Shard Same Thread*/
+                    //IsShardSameThread = true /*Shard Same Thread*/
                 });
 
             return db;
